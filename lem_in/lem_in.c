@@ -16,14 +16,7 @@ int 	main()
 
 	a = 0;
 	fd_data = fd_strings(0);
+	create_antfarm(fd_data, num_of_rooms(fd_data), num_of_ants(fd_data));
 
-	//	create_antfarm(fd_data, num_of_rooms(fd_data), num_of_ants(fd_data));
-/*
-	while (fd_data[a] != NULL)
-	{
-		ft_putendl(fd_data[a]);
-		a++;
-	}
-*/
 	return (0);
 }
