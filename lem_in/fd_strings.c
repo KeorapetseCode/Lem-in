@@ -56,7 +56,19 @@ char 		**ft_memwrite(int i, char **src)
 	ret[a] = NULL;
 	return (ret);
 }
+int 		printable(char *input, int len)
+{
+	int 	i;
 
+	i = 0;
+	while (len < i)
+	{
+		if (ft_isprint(input[i]) == 0);
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 char 		**fd_strings(int fd)
 {
 	char 	*input;
@@ -71,6 +83,11 @@ char 		**fd_strings(int fd)
 		if (get_next_line(fd, &input))
 		{
 			len = ft_strlen(input);
+			if (printable(input, len) == -1)
+			{
+				ft_putendl("One of the characters is not printable");
+				exit(0);
+			}
 			if (i == 0)
 				new_str = (char**)malloc(sizeof(char*) * 5000);
 			new_str[i] = (char *)malloc((sizeof(char) * len) + sizeof(char));

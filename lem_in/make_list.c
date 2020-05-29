@@ -3,32 +3,35 @@
 char	*make_node_2(const char *s, char c)
 {
 	int		a;
-	int 	i;
+	size_t 	i;
 	int 	temp;
 	char	*ret;
 
 	a = 0;
 	i = 0;
 	ret = NULL;
-	while (1)
+	while (s[a] != '\0')
 	{
 		if (s[a] == c)
 		{
-			temp = a + 1;
-			while (s[a] != '\0')
+			a += 1;
+			temp = a;
+			while(s[a] != '\0')
 			{
+				if (ft_isprint(s[a]))
+					i++;
 				a++;
-				i++;
 			}
 			ret = (char *)malloc((sizeof(char) * i) + sizeof(char));
 			a = temp;
 			i = 0;
 			while (s[a] != '\0')
 			{
-				ret[i] = s[a]; 
+				if (ft_isprint(s[a]))
+					ret[i] = s[a]; 
 				i++;
 				a++;
-			}	
+			}
 			ret[i] = '\0';
 			return (ret);
 		}
