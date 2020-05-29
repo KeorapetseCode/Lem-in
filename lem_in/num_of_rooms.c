@@ -1,12 +1,6 @@
 #include "lem_in.h"
 
-void 		room_incr(int *room, int *pos)
-{//This function is to minimize the no. of lines in the num_of_rooms function
-	(*room)++;
-	(*pos)++;
-}
-
-int 		num_of_rooms(char **map_strngs)
+int 		total_rooms(char **map_strngs)
 {
 	int 	i;
 	int 	room;
@@ -22,12 +16,16 @@ int 		num_of_rooms(char **map_strngs)
 	while (map_strngs[i] != NULL)
 	{
 		if (ft_strnstr(map_strngs[i], "start", 5) && start == 0)
-			room_incr(&room, &start);
-		else if (ft_strnstr(map_strngs[i], "end", 3) && end == 0)
-			room_incr(&room, &end);
-		else if (ft_isdigit(map_strngs[i][0]) && map_strngs[i][1] != '-')
+		{
 			room++;
-		else if (ft_isdigit(map_strngs[i][0]) && map_strngs[i][1] == '\0')
+			start++;
+		}
+		else if (ft_strnstr(map_strngs[i], "end", 3) && end == 0)
+		{
+			room++;
+			end++;
+		}
+		else if ((!(ft_strchr(map_strngs[i], '-'))) && map_strngs[i][0] != '#')
 			room++;
 		i++;
 	}
