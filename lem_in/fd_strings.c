@@ -27,15 +27,11 @@ int 		map_valid(char **map_strngs)
 			a++;
 		}
 	}
-/*	else
-	{
-		ft_putendl("strlen");
-		ft_putnbr(ft_strlen(map_strngs[0]));
-	}
-*/	if ((start == 1) && (end == 1) && (links > 0) && (a > 1))
+	if ((start == 1) && (end == 1) && (links > 0) && (a > 1))
 		return (links);
 	return (-1);
 }
+
 
 char 		**ft_memwrite(int i, char **src)
 {
@@ -56,7 +52,8 @@ char 		**ft_memwrite(int i, char **src)
 	ret[a] = NULL;
 	return (ret);
 }
-int 		printable(char *input, int len)
+
+int 		if_printable(char *input, int len)
 {
 	int 	i;
 
@@ -69,6 +66,7 @@ int 		printable(char *input, int len)
 	}
 	return (0);
 }
+
 char 		**fd_strings(int fd)
 {
 	char 	*input;
@@ -83,13 +81,13 @@ char 		**fd_strings(int fd)
 		if (get_next_line(fd, &input))
 		{
 			len = ft_strlen(input);
-			if (printable(input, len) == -1)
+			if (if_printable(input, len) == -1)
 			{
 				ft_putendl("One of the characters is not printable");
 				exit(0);
 			}
 			if (i == 0)
-				new_str = (char**)malloc(sizeof(char*) * 5000);
+				new_str = (char**)malloc(sizeof(char*) * 5000000);
 			new_str[i] = (char *)malloc((sizeof(char) * len) + sizeof(char));
 			new_str[i] = ft_strcpy(new_str[i], input);
 			i++;

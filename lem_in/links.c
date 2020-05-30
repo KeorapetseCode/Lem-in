@@ -1,5 +1,84 @@
 #include "lem_in.h"
 
+int 		check_links(t_farm **a, t_farm *head)
+{
+	int 	s_num;
+	int 	e_num;
+	int 	i;
+	t_farm 	*start_node;
+	t_farm 	*end_node;
+
+	i = 0;
+	s_num = 0;
+	e_num = 0;
+	start_node = NULL;
+	end_node = NULL;
+	(*a) = head->next;
+	while ((*a) != NULL)
+	{
+		if ((*a)->room_id == 1)
+		{
+			start_node = (*a);
+			s_num++;
+		}
+		else if ((*a)->room_id == 2)
+		{
+			end_node = (*a);
+			e_num++;
+		}
+		else if (start_node != NULL && end_node != NULL)
+			break ;
+		(*a) = (*a)->next;
+	}
+	if (start_node == NULL || end_node == NULL || (start_node == end_node))
+	{
+		ft_putendl("No start or end node");
+		return (-1);
+	}
+	if (s_num > 1 || e_num > 1)
+	{
+		ft_putendl("Multiple Start or End Room");
+		return (-1);
+	}
+	s_num = 0;
+	e_num = 0;
+	(*a) = head->next;
+	while ((*a) != NULL)
+	{
+		if ((*a)->links != NULL && (*a)->links[0] != (*a))
+		{
+			while ((*a)->links[i] != (*a))
+			{
+				if ((*a)->links[i] == start_node)
+				{
+					if (s_num == 0)
+						s_num = 1;
+				}
+				else if ((*a)->links[i] == end_node)
+				{
+					if (e_num == 0)
+						e_num = 1;
+				}
+				else if (((*a) == end_node) && ((*a)->links[i] != (*a)))
+				{
+					if (e_num == 0)
+						e_num = 1;
+				}
+				else if (((*a) == start_node) && ((*a)->links[i] != (*a)))
+				{
+					if (s_num == 0)
+						s_num = 1;
+				}
+				i++;
+			}
+			i = 0;
+		}
+		(*a) = (*a)->next;
+	}
+	(*a) = head->next;
+	return (s_num + e_num);
+}
+
 void 	alloc_totalinks(t_farm **a, t_farm *head, char **map_strngs, int total)
 {
 	while ((*a) != NULL)
@@ -38,88 +117,6 @@ int		compare(const char *s1, const char *s2)
 	return (0);
 }
 
-void 		link_nodes(t_farm **a, t_farm *temp)
-{
-	int 	i;
-	
-	i = 0;
-	if (compare((*a)->links[0]->room_name, (*a)->room_name) == 0)
-	{
-		if (compare((*a)->room_name, temp->room_name) == 0)
-			return ;
-		(*a)->links[0] = temp;
-		(*a)->links[1] = (*a);
-		return ;
-	}
-	else
-	{
-		while (compare((*a)->room_name, (*a)->links[i]->room_name) > 0)
-			i++;
-		if (compare((*a)->links[i]->room_name, (*a)->room_name) == 0)
-		{
-			if (compare((*a)->room_name, temp->room_name) == 0)
-				return ;
-			(*a)->links[i] = temp;
-			(*a)->links[i+1] = (*a);
-			return ;
-		}
-	}
-}
-
-void 	create_links(t_farm **a, t_farm *head, char **map_strngs)
-{
-	int 	i;
-	char 	*node_1;
-	char 	*node_2;
-	t_farm 	*temp;
-
-	i = 1;
-	node_1 = NULL;
-	node_2 = NULL;
-	temp = NULL;
-	while (!(ft_strchr(map_strngs[i], '-')))
-		i++;
-	while (map_strngs[i] != NULL)
-	{
-		node_1 = room_writer(map_strngs[i], '-');
-		node_2 = make_node_2(map_strngs[i], '-');
-		(*a) = head->next;
-		temp = head->next;
-		while (temp != NULL)
-		{
-			if (compare(temp->room_name, node_2) == 0)
-			{
-				while ((*a) != NULL)
-				{
-					if (compare((*a)->room_name, node_1) == 0)
-					{
-						
-						ft_putstr((*a)->room_name);
-						ft_putstr("------");
-						ft_putendl(temp->room_name);
-						link_nodes(a, temp);
-					}
-					(*a) = (*a)->next;
-				}
-				if ((*a) == NULL)
-					break ;
-			}
-			if (temp->next != NULL && (*a) != NULL)
-				temp = temp->next;
-		}
-		i++;
-	}
-	if (map_strngs[i] == NULL)
-	{
-		ft_putstr("\n\nMap is done\n");
-	//	exit(0);
-		return ;
-	}
-}
-
-
-
-
 void 	links_alloc(t_farm **a, t_farm *head, char **map_strngs)
 {
 	int 	total_links;
@@ -132,31 +129,4 @@ void 	links_alloc(t_farm **a, t_farm *head, char **map_strngs)
 	}
 	(*a) = head->next;
 	alloc_totalinks(a, head, map_strngs, total_links);
-	create_links(a, head, map_strngs);
-	int 	b = 0;
-	(*a) = head->next;
-	while ((*a) != NULL)
-	{
-		if ((*a)->links == NULL)
-		{
-			ft_putstr((*a)->room_name);
-			ft_putendl(" is NULL links");
-		}
-		else
-		{
-			while ((*a)->links[b] != NULL)
-			{
-				if (compare((*a)->links[b]->room_name, (*a)->room_name) > 0)
-				{
-					ft_putstr((*a)->room_name);
-					ft_putstr(" -- ");
-					ft_putendl((*a)->links[b]->room_name);	
-				}
-				b++;
-			}
-			b = 0;
-			ft_putstr("\n");
-		}
-		(*a) = (*a)->next;
-	}
 }
