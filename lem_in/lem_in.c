@@ -40,6 +40,7 @@ int 		main()
 		ft_putendl("There's no path to destination");
 		exit(0);
 	}
+	//	print_result(a, head, &path);
 	ft_putchar('\n');
 	return (0);
 }
