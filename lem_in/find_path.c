@@ -1,5 +1,47 @@
 #include "lem_in.h"
 
+void 		set_visitzero(t_farm **a, t_farm *head)
+{
+	(*a) = head->next;
+	while ((*a) != NULL)
+	{
+		if ((*a)->room_id == -2)
+			(*a)->visit = 0;
+		(*a) = (*a)->next;
+	}
+}
+
+int 		num_of_links(t_farm **a, t_farm *head, t_farm *node)
+{
+	int 	ret;
+	int 	i;
+	t_farm 	*temp;
+
+	i = 0;
+	ret = 0;
+	temp = NULL;
+	temp = (*a);
+	(*a) = head->next;
+	while ((*a) != NULL)
+	{
+		if ((*a)->links != NULL && (*a)->links[0] != (*a))
+		{
+			while ((*a)->links[i] != (*a))
+			{
+				if ((*a)->links[i] == node)
+					ret++;
+				else if (((*a) == node) && ((*a)->links[i] != (*a)))
+					ret++;
+				i++;
+			}
+			i = 0;
+		}
+		(*a) = (*a)->next;
+	}
+	(*a) = temp;
+	return (ret);
+}
+
 int 		num_of_endlinks(t_farm **a, t_farm *head)
 {
 
@@ -44,22 +86,17 @@ int 		search_path(t_farm **a, t_farm *head, t_farm **path, int end_links)
 {
 	int 	i;
 	t_farm	*j;
+	t_farm 	*base;
 
 	i = 0;
 	j = NULL;
-	while ((*a) != NULL)
-	{
-		if ((*a)->room_id == 2)
-			break ;
+	base = NULL;
+	(*a) = head->next;
+	while ((*a)->room_id != 1)
 		(*a) = (*a)->next;
-	}
-	ft_putendl((*a)->room_name);
-	j = (*a);
-/*	while ((*a) != NULL)
-	{
-
-	}*/
-//	return (0);
+	base = (*a);
+	
+	return (0);
 }
 
 int 		find_path(t_farm **a, t_farm *head)
@@ -70,17 +107,37 @@ int 		find_path(t_farm **a, t_farm *head)
 
 	i = 0;
 	path = NULL;
-	end_links = num_of_endlinks(a, head);
+/*	end_links = num_of_endlinks(a, head);
 	if (end_links == 0)
 	{
 		ft_putendl("No one is linked to end");
 		return (0);
 	}
+*/
+	(*a) = head->next;
+	while ((*a) != NULL)
+	{	
+		(*a)->total_links = num_of_links(a, head, (*a));
+		(*a) = (*a)->next;
+	}
+	ft_putendl("Out");
+	(*a) = head->next;
+	while ((*a) != NULL)
+	{
+		ft_putstr((*a)->room_name);
+		ft_putstr(" ");
+		ft_putnbr((*a)->total_links);
+		ft_putchar('\n');
+		(*a) = (*a)->next;
+	}
+
+	/*
 	if (search_path(a, head, &path, end_links) == -1)
 	{
 		ft_putendl("Dead end");
 		return (0);
 	}
+	*/
 //	print_result(a, head, &path);
 	return (1);
 }

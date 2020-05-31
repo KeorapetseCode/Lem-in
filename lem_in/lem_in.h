@@ -2,15 +2,17 @@
 # define LEM_IN_H
 
 #include "get_next_line/get_next_line.h"
-#include <stdio.h>
 
 typedef struct  		s_farm
 {
 	int 				room_id;
+	int 				visit;
+	int 				total_links;
 	char 				*room_name;
 	char 				**ant;
 	struct s_farm		**links;
 	struct s_farm		*next;
+	struct s_farm		*prev;
 }						t_farm;
 
 void 					test_links(t_farm **a, t_farm *head);
