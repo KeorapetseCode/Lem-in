@@ -1,5 +1,7 @@
 #include "lem_in.h"
-
+//Allocates the possible number of rooms that visit might actually visit
+//This is to keep track of how many rooms that have actually been visited.
+//
 t_path		*ft_start_path(t_path *visit, t_keys *keys, int start)
 {
 	if (!(visit = (t_path *)malloc(sizeof(t_path))))
@@ -15,6 +17,7 @@ t_path		*ft_start_path(t_path *visit, t_keys *keys, int start)
 	visit->visits[0] = start;
 	return (visit);
 }
+
 
 t_visit		*ft_rec_visit(t_visit *visit, t_keys *keys, int start)
 {

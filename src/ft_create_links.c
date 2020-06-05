@@ -25,7 +25,7 @@ t_links		*ft_links(t_rooms *rooms, t_links *links, char *read)
 	{
 		ft_putstr("ERROR\n");
 		exit(0);
-	}	
+	}
 	links->links[start][end] = 1;
 	links->links[end][start] = 1;
 	return (links);

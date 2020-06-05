@@ -1,5 +1,7 @@
 #include "lem_in.h"
-//This function is created by called by ft_create links.
+//This function is called by ft_create links.
+//This is the function that is responsible for giving t_keys->rooms its value.
+//
 //
 t_rooms		*ft_rooms(t_rooms *rooms, char *roomName, t_keys *keys)
 {
@@ -7,7 +9,7 @@ t_rooms		*ft_rooms(t_rooms *rooms, char *roomName, t_keys *keys)
 	t_rooms	*temp;
 	int		i;
 
-	if (!ft_is_room(roomName))
+	if (!ft_is_room(roomName))//Checks if the room name is valid(int max and NULL terminator in the string)
 	{
 		ft_putstr("ERROR\n");
 		exit(0);
@@ -37,3 +39,38 @@ t_rooms		*ft_rooms(t_rooms *rooms, char *roomName, t_keys *keys)
 	}
 	return (rooms);
 }
+
+char		**read_for_rooms(t_keys *keys)
+{
+	char 	*line;
+	char 	*raw_str;
+	char 	*temp;
+	char 	**ret;
+
+	raw_str = NULL;
+	temp = NULL;
+	ret = NULL;
+	while (get_next_line(0, &line) == 1)
+	{
+		if (!ft_strchr(line, ' ') && line[0] != '#')
+		{
+			keys->read = ft_strdup(line);
+			break ;
+		}
+		raw_str = ft_strjoin(temp, line);
+		temp = ft_strjoin(raw_str, "@");
+	}
+	if (ft_strlen(line) == 0)
+	{
+		ft_putstr("ERROR\n");
+		exit(0);
+	}
+	free(temp);
+	free(line);
+	ret = ft_strsplit(raw_str, '@');
+	free(raw_str);
+	return (ret);
+}
+
+
+

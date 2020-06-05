@@ -13,7 +13,7 @@ void    	ft_room(char *line, t_keys *keys, int check_start_end)
 	{
 		ft_putstr("ERROR\n");
 		exit(0);
-	} 
+	}
 	name = ft_strsplit(line, ' ');
 	i = 0;
 	while (name[i])
@@ -35,37 +35,42 @@ void    	ft_room(char *line, t_keys *keys, int check_start_end)
 	}
 	free(name);
 }
-
+//(Be carefull)There's ft_room and ft_rooms.
+//
 t_rooms    *ft_create_rooms(t_keys *keys, t_rooms *rooms)
 {
-	char	*line;
+	char	**line;
 	char	*temp;
 	int		check_start_end;
+	int 	i;
 
-	check_start_end = 0;
-	while (get_next_line(0, &line) == 1)
+	i = 0;
+	line = read_for_rooms(keys);
+	if (ft_search_mult_startend(line) != 2)
 	{
-		temp = ft_strdup(line);
-		if (check_start_end > 0)
-			ft_room(temp, keys, check_start_end);
-		check_start_end = ft_search_start_end(line);
-		if (line[0] != '#' && ft_strchr(line, ' '))
-			rooms = ft_rooms(rooms, line, keys);
-		if (!ft_strchr(line, ' ') && line[0] != '#')
-		{
-			keys->read = ft_strdup(line);
-			break ;
-		}
-		ft_putendl(line);
-		free(line);
-		free(temp);
-	}
-	if (ft_strlen(line) == 0)
-	{
-		ft_putstr("ERROR\n");
+		ft_putendl("Error");
 		exit(0);
 	}
+	ft_putnbr(keys->ants);
+	ft_putchar('\n');
+	i = 0;
+	check_start_end = 0;
+	while (line[i] != NULL)
+	{
+		temp = ft_strdup(line[i]);
+		if (check_start_end == 1)
+			ft_room(temp, keys, check_start_end);
+		else if (check_start_end == 2)
+			ft_room(temp, keys, check_start_end);
+		check_start_end = ft_search_start_end(line[i]);
+		if (line[i][0] != '#' && ft_strchr(line[i], ' '))
+			rooms = ft_rooms(rooms, line[i], keys);
+		ft_putendl(line[i]); //This line prints out the rooms and not the links
+		free(temp);
+		i++;
+	}
 	free(line);
-	free(temp);
+
+//	ft_putchar('\n');
 	return (rooms);
 }

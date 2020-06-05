@@ -54,6 +54,4 @@ void	ft_num_of_ants(t_keys *keys)
 		}
 		free(line);
 	}
-	ft_putnbr(keys->ants);
-	ft_putchar('\n');
 }
