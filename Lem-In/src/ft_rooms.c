@@ -1,8 +1,5 @@
 #include "lem_in.h"
-//This function is called by ft_create links.
-//This is the function that is responsible for giving t_keys->rooms its value.
-//
-//
+
 t_rooms		*ft_rooms(t_rooms *rooms, char *roomName, t_keys *keys)
 {
 	t_rooms	*node;
@@ -10,7 +7,7 @@ t_rooms		*ft_rooms(t_rooms *rooms, char *roomName, t_keys *keys)
 	int		i;
 
 	if (!ft_is_room(roomName))
-	{
+	{ 
 		ft_putstr("ERROR\n");
 		exit(0);
 	}
@@ -20,7 +17,7 @@ t_rooms		*ft_rooms(t_rooms *rooms, char *roomName, t_keys *keys)
 		exit(0);
 	}
 	i = ft_strchr(roomName, ' ') - roomName;
-	if (!(node = (t_rooms *)malloc(sizeof(t_rooms))))
+	if (!(node = (t_rooms *)malloc(sizeof(t_rooms *))))
 	{
 		ft_putstr("ERROR\n");
 		exit(0);

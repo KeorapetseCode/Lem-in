@@ -7,7 +7,7 @@ int			ft_is_path(char *str, t_path *path)
 	temp = path;
 	while(temp)
 	{
-		if (ft_strequ(str, path->map))
+		if (!ft_strcmp(str, path->map))
 			return (1);
 		temp = temp->next;
 	}
@@ -41,6 +41,7 @@ t_path		*ft_add_to_path(t_path *path, t_rooms *rooms, t_keys *keys)
 	return (path);
 }
 
+
 t_path		*ft_final_path(t_path *visit, t_path *path, t_rooms *rooms, t_keys *keys)
 {
 	int		i;
@@ -62,4 +63,54 @@ t_path		*ft_final_path(t_path *visit, t_path *path, t_rooms *rooms, t_keys *keys
 		i++;
 	}
 	return (path);
+}
+
+t_path 		*check_path(t_keys *keys, t_path *path)
+{
+	t_path 	*temp;
+	t_path 	*head;
+	t_path 	*j;
+	t_path 	*k;
+	int 	i;
+	int  	a;
+
+
+	temp = path;
+	head = temp;
+	j = NULL;
+	a = 0;
+	i = 0;
+	keys->room_counter = 0;
+	while (temp != NULL)
+	{
+		keys->room_counter++;
+		if (!ft_strcmp(temp->map, keys->end))
+			break ;
+		temp = temp->next;
+	}
+	j = temp;
+	while (j != NULL)
+	{
+		j = j->next;
+		i++;
+	}
+	j = temp;
+	while (i != 0)
+	{
+		while (a < i)
+		{
+			k = j;
+			j = j->next;
+			a++;
+		}
+		free(j);
+		k->next = NULL;
+		i--;
+		a = 0;
+		j = temp;
+	}
+//	free(temp->next);
+	temp->next = NULL;
+	temp = head;
+	return (temp);
 }

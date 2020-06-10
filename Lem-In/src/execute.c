@@ -1,9 +1,5 @@
 #include "lem_in.h"
 
-//Sets every pointer and integer to NULL and 0.
-//As we are advised in C to set every pointer to NULL before we use it.
-//keys is passed by refernce to this function, the reason being we change its variable properties.
-
 void	ft_begin(t_keys *keys)
 {
 	t_keys	*key;
@@ -26,34 +22,26 @@ void	ft_check_start_end(t_keys *keys)
     }
 }
 
-
-//_____________________________________________________________________________________
-//Checks the first line of the input file.
-//if it finds a number less than 0 or Something other than a comment it prints ERROR
-//If it finds a number greater than zero and lesser than int_max it prints it on the standard output.
-
-void	ft_num_of_ants(t_keys *keys)
+void	ft_num_of_ants(t_keys *keys, t_notes *map)
 {
-	char	*line;
+	t_notes *farm;
 
-	while(get_next_line(0, &line) == 1)
+	farm = map;
+	while (farm->next != NULL)
 	{
-		if(ft_int_max(line) && ft_atoi(line) > 0)
+		if (ft_int_max(farm->note) && ft_atoi(farm->note) > 0)
 		{
-			keys->ants = ft_atoi(line);
-			free(line);
+			keys->ants = ft_atoi(farm->note);
 			break ;
 		}
-		else
+		else 
 		{
-			if (line[0] != '#')
+			if (farm->note[0] != '#')
 			{
-                ft_putstr("ERROR\n");
-                exit(0);
-            }
+				ft_putstr("ERROR\n");
+				exit(0);
+			}
 		}
-		free(line);
+		farm = farm->next;
 	}
-//	ft_putnbr(keys->ants);
-//	ft_putchar('\n');
 }

@@ -1,12 +1,10 @@
 #include "lem_in.h"
-//This function is called by ft_create_rooms.
-//The rest is self explanitory.
-//It also re checked by lem-in.c 
+
 int     	ft_search_start_end(char *line)
 {
-	if (ft_strequ(line, "##start"))
-		return 1;
-	else if (ft_strequ(line, "##end"))
-		return 2;
-	return 0;
+	if (!ft_strncmp(line, "##start", 7))
+		return (1);
+	else if (!ft_strncmp(line, "##end", 5))
+		return (2);
+	return (0);
 }

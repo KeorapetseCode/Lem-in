@@ -1,7 +1,4 @@
 #include "lem_in.h"
-//Checks the string passed (which is the first string of the input file)
-//This finction will ignore SPACES, FORM FEED, HORIZONTAL TAB, VERTICAL TAB, AND CARRIAGE RETURN.(ascii decimal 10 to 13)
-//Finally it will check if the number is greater than zero and lesser than int_max.
 
 int		 ft_int_max(char *str)
 {
