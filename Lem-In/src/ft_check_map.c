@@ -19,15 +19,17 @@ int         ft_rooms_map(t_notes *map)
 int         ft_dest_present(t_notes *map)
 {
     int     i;
+    size_t  len;
     t_notes *temp;
 
     i = 0;
     temp = map;
     while (temp != NULL)
     {
-        if (!ft_strncmp(temp->note, "##start", 7))
+        len = ft_strlen(temp->note);
+        if (len == 7 && !ft_strncmp(temp->note, "##start", 7))
             i++;
-        if (!ft_strncmp(temp->note, "##end", 5))
+        else if (len == 5 && !ft_strncmp(temp->note, "##end", 5))
             i++;
         temp = temp->next;
     }

@@ -22,7 +22,7 @@ all: lem-in_lib lem-in clean
 
 lem-in_lib:
 	@cd $(DIRSRC)
-	@gcc -c $(DIRSRC)/*.c -g
+	@gcc $(FLAGS) -c $(DIRSRC)/*.c -g
 	@ar rc $(DIRSRC)/lem-in.a *.o
 	@rm -fr *.o
 

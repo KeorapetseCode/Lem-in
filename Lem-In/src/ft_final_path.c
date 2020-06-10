@@ -69,17 +69,9 @@ t_path 		*check_path(t_keys *keys, t_path *path)
 {
 	t_path 	*temp;
 	t_path 	*head;
-	t_path 	*j;
-	t_path 	*k;
-	int 	i;
-	int  	a;
-
 
 	temp = path;
 	head = temp;
-	j = NULL;
-	a = 0;
-	i = 0;
 	keys->room_counter = 0;
 	while (temp != NULL)
 	{
@@ -88,29 +80,11 @@ t_path 		*check_path(t_keys *keys, t_path *path)
 			break ;
 		temp = temp->next;
 	}
-	j = temp;
-	while (j != NULL)
+	if (temp->next != NULL)
 	{
-		j = j->next;
-		i++;
+		free(temp->next);
+		temp->next = NULL;
 	}
-	j = temp;
-	while (i != 0)
-	{
-		while (a < i)
-		{
-			k = j;
-			j = j->next;
-			a++;
-		}
-		free(j);
-		k->next = NULL;
-		i--;
-		a = 0;
-		j = temp;
-	}
-//	free(temp->next);
-	temp->next = NULL;
 	temp = head;
 	return (temp);
 }

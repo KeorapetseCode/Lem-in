@@ -27,6 +27,16 @@ int         main()
     	path = ft_final_path(paths, path, rooms, &keys); // <- WE LOOK FOR THE SHORT PATH AND CREATE THAT PATH
 		ft_display_map(map); // <- DISPLAYING THE MAP
 		path = check_path(&keys, path);
+	//	ft_putstr("path_room counter ");
+	//	ft_putnbr(keys.room_counter);
+	/*	while (path)
+		{
+			ft_putendl(path->map);
+			path = path->next;
+		}
+	*/
+	//	ft_putchar('\n');
+	//	exit(0);
 		path = ft_display_1(path, &keys); // <- WE THEN DISPLAY OUR ANTS ON THE STANDARD OUT
 		empty(links, rooms, paths, &keys, path, map); // <- WE THEN WE CLEAR ALL THE LINKED LIST AND IN THE STACK
 	}
