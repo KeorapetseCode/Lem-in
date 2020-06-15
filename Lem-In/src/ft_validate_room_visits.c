@@ -19,8 +19,7 @@ int        ft_decrem_visit(int j)
 	j = j - 1;
 	if (j < 0)
 	{
-		ft_putstr("ERROR\n");
-		exit(0);
+		return (-1);
 	}
 	return (j);
 }

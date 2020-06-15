@@ -15,30 +15,32 @@ int         main()
 	links = NULL;
 	paths = NULL;
 	
-	ft_begin(&keys); // <- WE ALLOCATE THE IMPORTANT KEYS TO NULL IF IT IS A STRING AND 0 IF IT IS NUMBER
-	map = ft_create_map(map); // <- WE RECREATE OUR MAP USING GNL AND THEN IT GETS STORED IN A LINKED LIST
+	ft_begin(&keys);
+	map = ft_create_map(map);
 	if (map != NULL && ft_rooms_map(map) > 1 && ft_link_map(map) > 0 && ft_dest_present(map) == 2)
 	{
-		ft_num_of_ants(&keys, map); // <- WE READ FROM THE MAP FILE AND CHECK IF IT IS NUMBER AND THEN SET OUR KEY->ANT = ANT NUMBER OF ANTS
-		rooms = ft_create_rooms(&keys, rooms, map); // <- WE READ THE MAP FILE AND CHECK IF THERE ARE ROOMS AND WE COUNT AND COUNT THE NUMBER OF ROOMS = SET KEY->ROOMS = NUMBER OF ROOMS
-		links = ft_create_links(links, rooms, &keys, map); // <- WE READ THE MAP FILE AND LOOK FOR LINKS AND CREATE LINKS
-		ft_check_start_end(&keys); // <- WE CHECK FOR START AND END STRINGS. IF THEY NOT THERE, WE EXIT
-		paths = ft_create_path(rooms, links, &keys, paths); // <- WE CREATE DIFFERENT PATHS 
-    	path = ft_final_path(paths, path, rooms, &keys); // <- WE LOOK FOR THE SHORT PATH AND CREATE THAT PATH
-		ft_display_map(map); // <- DISPLAYING THE MAP
+		ft_num_of_ants(&keys, map);
+		rooms = ft_create_rooms(&keys, rooms, map);
+		links = ft_create_links(links, rooms, &keys, map);
+		
+		ft_check_start_end(&keys);
+		paths = ft_create_path(rooms, links, &keys, paths);
+    	if (paths == NULL)
+    	{
+    		empty_links(links, &keys);
+    	 	free(keys.start);
+			free(keys.end);
+			free(keys.read);
+			empty_rooms(rooms);
+			empty_map(map);
+    		ft_putendl("ERROR");
+    		exit(0);
+    	}
+    	path = ft_final_path(paths, path, rooms, &keys);
+		ft_display_map(map);
 		path = check_path(&keys, path);
-	//	ft_putstr("path_room counter ");
-	//	ft_putnbr(keys.room_counter);
-	/*	while (path)
-		{
-			ft_putendl(path->map);
-			path = path->next;
-		}
-	*/
-	//	ft_putchar('\n');
-	//	exit(0);
-		path = ft_display_1(path, &keys); // <- WE THEN DISPLAY OUR ANTS ON THE STANDARD OUT
-		empty(links, rooms, paths, &keys, path, map); // <- WE THEN WE CLEAR ALL THE LINKED LIST AND IN THE STACK
+		path = ft_display_1(path, &keys);
+		empty(links, rooms, &keys, path, paths, map);
 	}
 	else 
 	{

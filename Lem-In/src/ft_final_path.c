@@ -26,7 +26,7 @@ t_path		*ft_add_to_path(t_path *path, t_rooms *rooms, t_keys *keys)
         ft_putstr("ERROR\n");
         exit(0);
     }
-	node->map = ft_strdup(rooms->data);
+	node->map = ft_strdup(rooms->data); 
 	node->next = NULL;
 	if (!path)
 		path = node;

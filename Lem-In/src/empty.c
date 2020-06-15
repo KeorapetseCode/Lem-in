@@ -24,7 +24,7 @@ void		empty_path(t_path *path)
 		free(current->map);
 		free(current);
 	}
-	free(current);
+//	free(path);
 }
 
 void		empty_rooms(t_rooms *rooms)
@@ -38,7 +38,7 @@ void		empty_rooms(t_rooms *rooms)
 		free(current->data);
 		free(current);
 	}
-	free(rooms);
+//	free(rooms);
 }
 
 void		empty_map(t_notes *map)
@@ -52,7 +52,7 @@ void		empty_map(t_notes *map)
 		free(current->note);
 		free(current);
 	}
-	free(map);
+//	free(map);
 }
 
 void		empty_links(t_links *links, t_keys *keys)
@@ -69,14 +69,17 @@ void		empty_links(t_links *links, t_keys *keys)
 	free(links);
 }
 
-void		empty(t_links *links, t_rooms *rooms, t_path *visit, t_keys *keys, t_path *path, t_notes *map)
+void		empty(t_links *links, t_rooms *rooms, t_keys *keys, t_path *path, t_path *paths, t_notes *map)
 {
-	free(visit->visits);
 	empty_links(links, keys);
+
 	empty_path(path);
+	free(paths->visits);	
+	free(paths);
+
 	empty_rooms(rooms);
 	empty_map(map);
-	free(visit);
+
 	free(keys->start);
 	free(keys->end);
 	free(keys->read);

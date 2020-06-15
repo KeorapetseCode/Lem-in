@@ -12,8 +12,12 @@ t_links		*ft_links(t_rooms *rooms, t_links *links, char *read, t_notes *map, t_k
 		start++;
 	if (start != 2)
 	{
-		ft_putendl("ft_links 1");
-		ft_putstr("ERROR\n");
+		empty_map(map);
+		empty_rooms(rooms);
+		empty_links(links, keys);
+		free(keys->start);
+		free(keys->end);
+		ft_putendl("ERROR");
 		exit(0);
 	}	
 	start = ft_is_link(lst[0], rooms);
@@ -28,7 +32,7 @@ t_links		*ft_links(t_rooms *rooms, t_links *links, char *read, t_notes *map, t_k
 		empty_links(links, keys);
 		free(keys->start);
 		free(keys->end);
-		ft_putstr("ERROR\n");
+		ft_putendl("ERROR");
 		exit(0);
 	}	
 	links->links[start][end] = 1;
